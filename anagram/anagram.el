@@ -8,7 +8,7 @@
 
 (defun split-sort-string (str)
   "Split STR to char list and return the sorted list."
-  (sort (delete "" (split-string (downcase str) "")) 'string<))
+  (sort (string-to-list (downcase str)) '<))
 
 (defun anagrams-for (str candidates)
   "Return anagrams sublist of STR from CANDIDATES."
