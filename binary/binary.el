@@ -6,12 +6,16 @@
 
 (defun to-decimal (bin)
   "Convert string presented binary to decimal."
-  (let ((bins (delete "" (split-string bin "")))
-        (result 0))
+  (let ((result 0)
+        (wrong-format nil))
     (mapc (lambda (b)
-            (setq result (+ (* result 2) (string-to-number b))))
-          bins)
-    result))
+            (if (<= ?0 b ?1)
+                (setq result (+ (* result 2) (- b ?0)))
+              (setq wrong-format t)))
+          bin)
+    (if wrong-format
+        0
+      result)))
 
 
 
