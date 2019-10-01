@@ -4,19 +4,18 @@
 
 ;;; Code:
 
-(defun to-decimal (bin)
-  "Convert string presented binary to decimal."
-  (let ((result 0)
-        (wrong-format nil))
-    (mapc (lambda (b)
-            (if (<= ?0 b ?1)
-                (setq result (+ (* result 2) (- b ?0)))
-              (setq wrong-format t)))
-          bin)
-    (if wrong-format
-        0
-      result)))
+(require 'cl-seq)
 
+(defun to-decimal (s)
+  "Convert string presented binary to decimal."
+  (condition-case nil
+      (cl-reduce (lambda (c x)
+                   (if (<= ?0 x ?1)
+                       (+ (* 2 c) (- x ?0))
+                     (signal 'error x)))
+                 s
+                 :initial-value 0)
+    (error 0)))
 
 
 (provide 'binary)
