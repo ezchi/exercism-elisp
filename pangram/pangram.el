@@ -8,10 +8,9 @@
   "Return non-nil if STR is pangram."
   (let ((table (make-hash-table)))
     (mapc (lambda (c)
-            (when (or (<= ?a c ?z)
-                      (<= ?A c ?Z))
-              (puthash (downcase c) 1 table)))
-          str)
+            (when (<= ?a c ?z)
+              (puthash c 1 table)))
+          (downcase str))
     (= 26 (hash-table-count table))))
 
 
