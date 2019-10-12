@@ -4,14 +4,12 @@
 
 ;;; Code:
 
+(require 'cl)
+(require 'seq)
+
 (defun is-pangram (str)
   "Return non-nil if STR is pangram."
-  (let ((table (make-hash-table)))
-    (mapc (lambda (c)
-            (when (<= ?a c ?z)
-              (puthash c 1 table)))
-          (downcase str))
-    (= 26 (hash-table-count table))))
+  (= 26 (count-if (lambda (c) (<= ?a c ?z)) (seq-uniq (downcase str)))))
 
 
 (provide 'pangram)
