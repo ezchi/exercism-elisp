@@ -6,9 +6,6 @@
 
 (require 'seq)
 
-(defconst allergies--score-up-limit 256
-  "Up limit of allergy score.")
-
 (defconst allergies--allergies-alist '(("eggs" . 1)
                                        ("peanuts" . 2)
                                        ("shellfish" . 4)
@@ -27,8 +24,7 @@
 
 (defun allergic-to-p (score allergy)
   "Return if the SCORE include ALERGIC."
-  (let* ((score (mod score allergies--score-up-limit)))
-    (/= 0 (logand score (cdr (assoc allergy allergies--allergies-alist))))))
+  (/= 0 (logand score (cdr (assoc allergy allergies--allergies-alist)))))
 
 (provide 'allergies)
 ;;; allergies.el ends here
