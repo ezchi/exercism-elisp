@@ -4,6 +4,8 @@
 
 ;;; Code:
 
+(require 'seq)
+
 (defconst allergies--score-up-limit 256
   "Up limit of allergy score.")
 
@@ -19,18 +21,14 @@
 
 (defun allergen-list (score)
   "Generate allergies list from SCORE."
-  (let* ((score (mod score allergies--score-up-limit))
-         allergies)
-    (mapc (lambda (a)
-            (when (> (logand score (cdr a)) 0)
-              (add-to-list 'allergies (car a) 'append)))
-          allergies--allergies-alist)
-    allergies))
+  (seq-filter (lambda (a)
+                (allergic-to-p score a))
+              (mapcar 'car allergies--allergies-alist)))
 
 (defun allergic-to-p (score allergy)
   "Return if the SCORE include ALERGIC."
   (let* ((score (mod score allergies--score-up-limit)))
-    (> (logand score (cdr (assoc allergy allergies--allergies-alist))) 0)))
+    (/= 0 (logand score (cdr (assoc allergy allergies--allergies-alist))))))
 
 (provide 'allergies)
 ;;; allergies.el ends here
