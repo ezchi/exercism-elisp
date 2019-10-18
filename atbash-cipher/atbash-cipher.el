@@ -13,8 +13,8 @@
   "Encode PLAINTEXT to atbash-cipher encoding."
   (string-trim
    (replace-regexp-in-string
-    ".\\{5\\}"
-    (lambda (s) (concat s " "))
+    "\\(.\\{5\\}\\)"
+    "\\1 "
     (apply 'string
            (mapcar
             (lambda (c) (if (<= ?a c ?z) (- ?z (- c ?a)) c))
