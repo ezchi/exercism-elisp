@@ -10,7 +10,7 @@
     (if (= n 1)
         0
       (mapc (lambda (d)
-              (when (= (mod n d) 0)
+              (when (zerop (mod n d))
                 (setq sum (+ sum d))))
             (number-sequence 2 (/ (1+ n) 2)))
       sum)))
