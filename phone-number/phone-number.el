@@ -4,19 +4,14 @@
 
 ;;; Code:
 
-(defun extract-number (str)
-  "Get numbers from input STR."
-  (replace-regexp-in-string "[^0-9]" "" str))
+(require 'subr-x)
+(require 's)
 
 (defun numbers (str)
   "Return phone number from input STR or 10 `0' if is not right phone number."
-  (let* ((num (extract-number str))
-         (len (length num))
-         (prefix-one-p (string-prefix-p "1" num)))
-    (cond
-     ((= len 10) num)
-     ((and (= len 11) prefix-one-p) (substring num 1))
-     (t "0000000000"))))
+  (let* ((num (s-replace-regexp "[^0-9]" "" str)))
+    (or (cadr (s-match "^1?\\([1-9][0-9]\\{9\\}\\)$" num))
+        "0000000000")))
 
 (defun area-code (str)
   (substring (numbers str) 0 3))
