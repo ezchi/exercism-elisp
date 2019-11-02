@@ -4,13 +4,15 @@
 
 ;;; Code:
 
+(require 'cl-lib)
+
 (defun nucleotide-count (DNA)
   (let* ((result (copy-alist '((?A . 0)
                                (?C . 0)
                                (?G . 0)
                                (?T . 0)))))
     (mapc (lambda (c)
-            (setf (alist-get c result) (1+ (alist-get c result))))
+            (cl-incf (alist-get c result)))
           DNA)
     result))
 
