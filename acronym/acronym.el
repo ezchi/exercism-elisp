@@ -7,8 +7,7 @@
 (require 'cl-lib)
 
 (defun acronym (str)
-  (let* ((s (s-replace-regexp "[^a-zA-Z]" " " str))
-         (words (split-string s " " t)))
+  (let* ((words (split-string str "[^a-zA-Z]" t)))
     (mapconcat (lambda (w)
                  (upcase (substring w 0 1)))
                words "")))
