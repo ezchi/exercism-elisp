@@ -6,15 +6,11 @@
 
 (defun square (n)
   (cond
-   ((= n 1) 1e+0)
+   ((= n 1) 1.0)
    ((> n 1) (* 2 (square (1- n))))))
 
 (defun total ()
-  (let ((sum 0))
-    (mapc (lambda (i)
-            (setq sum (+ sum (square i))))
-          (number-sequence 1 64))
-    sum))
+  (1- (square 65)))
 
 (provide 'grains)
 ;;; grains.el ends here
