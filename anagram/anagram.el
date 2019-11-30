@@ -4,23 +4,20 @@
 
 ;;; Code:
 
-(require 'cl-lib)
+(require 'seq)
 
 (defun split-sort-string (str)
   "Split STR to char list and return the sorted list."
-  (sort (string-to-list (downcase str)) '<))
+  (sort (split-string (downcase str) "" t "") 'string<))
 
 (defun anagrams-for (str candidates)
   "Return anagrams sublist of STR from CANDIDATES."
-  (let ((sorted-str (split-sort-string str))
-        (result (list)))
-    (mapc (lambda (c)
-            (message c)
-            (when (and (not (string= str c))
-                       (equal sorted-str (split-sort-string c)))
-              (add-to-list 'result c t)))
-          candidates)
-    result))
+  (let ((sorted-str (split-sort-string str)))
+    (seq-filter (lambda (c)
+                  (when (and (not (string= str c))
+                             (equal sorted-str (split-sort-string c)))
+                    c))
+                candidates)))
 
 (provide 'anagram)
 ;;; anagram.el ends here
