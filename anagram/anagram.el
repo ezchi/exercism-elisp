@@ -3,21 +3,15 @@
 ;;; Commentary:
 
 ;;; Code:
+(require 'cl-seq)
 
-(require 'seq)
+(defun anagramp (word1 word2)
+  (and (not (equal word1 word2))
+       (equal (cl-sort (downcase word1) #'<)
+              (cl-sort (downcase word2) #'<))))
 
-(defun split-sort-string (str)
-  "Split STR to char list and return the sorted list."
-  (sort (split-string (downcase str) "" t "") 'string<))
-
-(defun anagrams-for (str candidates)
-  "Return anagrams sublist of STR from CANDIDATES."
-  (let ((sorted-str (split-sort-string str)))
-    (seq-filter (lambda (c)
-                  (when (and (not (string= str c))
-                             (equal sorted-str (split-sort-string c)))
-                    c))
-                candidates)))
+(defun anagrams-for (word candidates)
+  (remove-if-not (apply-partially #'anagramp word) candidates))
 
 (provide 'anagram)
 ;;; anagram.el ends here
