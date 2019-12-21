@@ -4,13 +4,14 @@
 
 ;;; Code:
 
+(require 'cl-lib)
+
 (defun armstrong-p (n)
   (let* ((str (number-to-string n))
          (len (length str))
          (sum 0))
     (mapc (lambda (c)
-            (setq sum (+ sum (expt (- c ?0) len))))
-          str)
+            (cl-incf sum (expt (- c ?0) len))) str)
     (= n sum)))
 
 (provide 'armstrong-numbers)

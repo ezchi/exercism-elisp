@@ -4,6 +4,8 @@
 
 ;;; Code:
 
+(require 'cl-lib)
+
 (defun concate-char (n c)
   (if c
       (if (= n 1)
@@ -22,7 +24,7 @@
                   (setq cnt 1)
                   (setq char x))
               (if (char-equal x char)
-                  (setq cnt (1+ cnt))
+                  (cl-incf cnt)
                 (setq result (format "%s%s" result (concate-char cnt char)))
                 (setq cnt 1)
                 (setq char x))))

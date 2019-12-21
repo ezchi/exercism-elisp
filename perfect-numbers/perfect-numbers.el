@@ -4,6 +4,8 @@
 
 ;;; Code:
 
+(require 'cl-lib)
+
 (defun aliquot-sum (n)
   "Calculates aliquot sum of N."
   (let ((sum 1))
@@ -11,7 +13,7 @@
         0
       (mapc (lambda (d)
               (when (zerop (mod n d))
-                (setq sum (+ sum d))))
+                (cl-incf sum d)))
             (number-sequence 2 (/ (1+ n) 2)))
       sum)))
 
